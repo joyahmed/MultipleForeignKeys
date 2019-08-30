@@ -1,0 +1,60 @@
+﻿@model IEnumerable<MultiForeignKeys.Models.Designations>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Count
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DesignationName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @{int rowNo = 0;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(rowNo += 1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeType.TypeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesignationName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DesignationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DesignationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DesignationId">Delete</a>
+            </td>
+        </tr>
+
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        var a = " ";
+        for (var i = 0; i < HTMLModElement.count; i++) {
+            a = [i];
+        }
+        $("#serial").append(a);
+    </script>
+}

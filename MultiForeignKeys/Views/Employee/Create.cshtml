@@ -1,0 +1,113 @@
+﻿@model MultiForeignKeys.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="EmployeeName" class="control-label"></label>
+                <input asp-for="EmployeeName" class="form-control" />
+                <span asp-validation-for="EmployeeName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeTypeIdOne" class="control-label"></label>
+                <select id="typeOne" name="TypeListOne" asp-for="EmployeeTypeIdOne" class="form-control" asp-items="ViewBag.EmployeeTypeIdOne">
+                    <option> --Select Employee Type One-- </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DesignationIdOne" class="control-label"></label>
+                <select id="desOne" name="DesignationListOne" asp-for="DesignationIdOne" class="form-control" asp-items='@(new SelectList(string.Empty, "DesignationId", "DesignationName"))'></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeTypeIdTwo" class="control-label"></label>
+                <select id="typeTwo" asp-for="EmployeeTypeIdTwo" class="form-control" asp-items="ViewBag.EmployeeTypeIdTwo">
+                    <option> --Select Employee Type One-- </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DesignationIdTwo" class="control-label"></label>
+                <select id="desTwo" asp-for="DesignationIdTwo" class="form-control" asp-items="ViewBag.DesignationIdTwo"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EmployeeTypeIdThree" class="control-label"></label>
+                <select id="typeThree" asp-for="EmployeeTypeIdThree" class="form-control" asp-items="ViewBag.EmployeeTypeIdThree">
+                    <option> --Select Employee Type One-- </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DesignationIdThree" class="control-label"></label>
+                <select id="desThree" asp-for="DesignationIdThree" class="form-control" asp-items="ViewBag.DesignationIdThree"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#typeOne").change(function () {
+                console.log("changed");
+                    var url = '@Url.Content("~/")' + "Employee/GetDesignationOneById";
+                    var ddlSource = "#typeOne";
+                    $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
+                        var items = '';
+                        $("#desOne").empty();
+                        $.each(data, function (i, row) {
+                            items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                        });
+                        $("#desOne").html(items);
+                    });
+                });
+            $("#typeTwo").change(function () {
+                console.log("changed");
+                    var url = '@Url.Content("~/")' + "Employee/GetDesignationTwoById";
+                    var ddlSource = "#typeTwo";
+                    $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
+                        var items = '';
+                        $("#desTwo").empty();
+                        $.each(data, function (i, row) {
+                            items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                        });
+                        $("#desTwo").html(items);
+                    });
+                });
+            $("#typeThree").change(function () {
+                console.log("changed");
+                    var url = '@Url.Content("~/")' + "Employee/GetDesignationThreeById";
+                    var ddlSource = "#typeThree";
+                    $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
+                        var items = '';
+                        $("#desThree").empty();
+                        $.each(data, function (i, row) {
+                            items += "<option value='" + row.value + "'>" + row.text + "</option>";
+                        });
+                        $("#desThree").html(items);
+                    });
+                });
+        });
+    </script>
+
+}
